@@ -57,7 +57,7 @@ This project trains and evaluates multiple machine learning models:
 
 * Random Forest
 * Decision Tree
-* Support Vector Machine (SVM) ✅ *(used for Streamlit app)*
+* Support Vector Machine (SVM)
 * Perceptron
 
 The trained SVM model (`lungcancer_svm.pkl`) along with the scaler (`lungcancer_scaler.pkl`) are saved in `folder-model/` for use in the web app.
