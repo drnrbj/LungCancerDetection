@@ -9,15 +9,15 @@ A machine learning project for predicting lung cancer risk based on patient surv
 ```
 LungCancerDetection/
 │
-├─ folder-data/            
+├─ data/            
 │   ├─ survey lung cancer.csv
 │   └─ lung_cancer_predictions.csv
 │
-├─ folder-model/           
+├─ model/           
 │   ├─ lungcancer_svm.pkl
 │   └─ lungcancer_scaler.pkl
 │
-├─ folder-notebooks/        
+├─ notebooks/        
 │   ├─ LungCancerDetection.ipynb
 │   └─ test_notebook.ipynb
 │
