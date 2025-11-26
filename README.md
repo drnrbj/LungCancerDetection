@@ -1,6 +1,6 @@
 # Lung Cancer Detection
 
-A machine learning project for predicting lung cancer risk based on patient survey data. This repository contains the dataset, trained models, notebooks for analysis, and a Streamlit app for interactive predictions. 
+A machine learning project for predicting lung cancer risk based on patient survey data. This repository contains the dataset, trained models, notebooks for analysis, and a Streamlit app for interactive predictions.
 
 ---
 
