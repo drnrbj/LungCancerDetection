@@ -4,28 +4,6 @@ A machine learning project for predicting lung cancer risk based on patient surv
 
 ---
 
-## **Project Structure**
-
-```
-LungCancerDetection/
-│
-├─ data/            
-│   ├─ survey lung cancer.csv
-│   └─ lung_cancer_predictions.csv
-│
-├─ model/           
-│   ├─ lungcancer_rf.pkl
-│
-├─ notebooks/        
-│   ├─ LungCancerDetection.ipynb
-│   └─ test_notebook.ipynb
-│
-├─ lungcancer.py            
-├─ README.md               
-```
-
----
-
 ## **Dataset**
 
 The dataset (`survey lung cancer.csv`) contains patient survey responses with the following features:
