@@ -2,12 +2,10 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# Load model
 rf_model = joblib.load("lungcancer_rf.pkl")
 
-# Page config
 st.set_page_config(page_title="Lung Cancer Detection", layout="centered")
-st.title("🫁 Lung Cancer Detection System")
+st.title("Lung Cancer Detection System")
 st.write("Predict lung cancer risk using manual input or CSV batch upload.")
 
 # Styling
@@ -27,21 +25,18 @@ div[data-baseweb="button"] {
 </style>
 """, unsafe_allow_html=True)
 
-# =========================
-# CSV UPLOAD (BATCH MODE)
-# =========================
 st.divider()
-st.subheader("📁 Batch Prediction via CSV Upload")
+st.subheader("Batch Prediction via CSV Upload")
 
 uploaded_file = st.file_uploader(
-    "Upload a CSV file with the correct feature columns",
+    "Upload a CSV file",
     type=["csv"]
 )
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
 
-    st.write("📄 Dataset Preview")
+    st.write("Dataset Preview")
     st.dataframe(df.head())
 
     if st.button("Predict from CSV", type="primary"):
@@ -52,7 +47,7 @@ if uploaded_file is not None:
             df["Prediction"] = predictions
             df["Cancer Probability"] = probabilities
 
-            st.success("✅ Batch prediction completed!")
+            st.success("Batch prediction completed!")
             st.dataframe(df)
 
             csv = df.to_csv(index=False).encode("utf-8")
@@ -64,31 +59,35 @@ if uploaded_file is not None:
             )
 
         except Exception as e:
-            st.error(f"❌ Error during prediction: {e}")
+            st.error(f"Error during prediction: {e}")
 
-    st.stop()  # Stop execution so manual form doesn't run
+    st.stop()
 
-# =========================
-# MANUAL INPUT (SINGLE MODE)
-# =========================
 st.divider()
-st.subheader("🧍 Manual Patient Input")
+st.subheader("Manual Patient Input")
 
-gender = st.radio("Gender", ["Male", "Female"], horizontal=True)
-age = st.number_input("Age", min_value=0, max_value=120, value=50)
-smoking = st.radio("Do you smoke?", ["No", "Yes"], horizontal=True)
-yellow_fingers = st.radio("Yellow fingers?", ["No", "Yes"], horizontal=True)
-anxiety = st.radio("Anxiety?", ["No", "Yes"], horizontal=True)
-peer_pressure = st.radio("Peer pressure?", ["No", "Yes"], horizontal=True)
-chronic_disease = st.radio("Chronic disease?", ["No", "Yes"], horizontal=True)
-fatigue = st.radio("Fatigue?", ["No", "Yes"], horizontal=True)
-allergy = st.radio("Allergy?", ["No", "Yes"], horizontal=True)
-wheezing = st.radio("Wheezing?", ["No", "Yes"], horizontal=True)
-alcohol_consumption = st.radio("Alcohol consumption?", ["No", "Yes"], horizontal=True)
-coughing = st.radio("Coughing?", ["No", "Yes"], horizontal=True)
-shortness_of_breath = st.radio("Shortness of breath?", ["No", "Yes"], horizontal=True)
-swallowing_difficulty = st.radio("Swallowing difficulty?", ["No", "Yes"], horizontal=True)
-chest_pain = st.radio("Chest pain?", ["No", "Yes"], horizontal=True)
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    age = st.number_input("Age", min_value=0, max_value=120, value=50)
+    gender = st.radio("Gender", ["Male", "Female"], horizontal=True)
+    smoking = st.radio("Do you smoke?", ["No", "Yes"], horizontal=True)
+    yellow_fingers = st.radio("Yellow fingers?", ["No", "Yes"], horizontal=True)
+    anxiety = st.radio("Anxiety?", ["No", "Yes"], horizontal=True)
+
+with col2:
+    peer_pressure = st.radio("Peer pressure?", ["No", "Yes"], horizontal=True)
+    chronic_disease = st.radio("Chronic disease?", ["No", "Yes"], horizontal=True)
+    fatigue = st.radio("Fatigue?", ["No", "Yes"], horizontal=True)
+    allergy = st.radio("Allergy?", ["No", "Yes"], horizontal=True)
+    wheezing = st.radio("Wheezing?", ["No", "Yes"], horizontal=True)
+
+with col3:
+    alcohol_consumption = st.radio("Alcohol consumption?", ["No", "Yes"], horizontal=True)
+    coughing = st.radio("Coughing?", ["No", "Yes"], horizontal=True)
+    shortness_of_breath = st.radio("Shortness of breath?", ["No", "Yes"], horizontal=True)
+    swallowing_difficulty = st.radio("Swallowing difficulty?", ["No", "Yes"], horizontal=True)
+    chest_pain = st.radio("Chest pain?", ["No", "Yes"], horizontal=True)
 
 # Prepare input data
 input_data = pd.DataFrame({
@@ -109,7 +108,6 @@ input_data = pd.DataFrame({
     "CHEST PAIN": [1 if chest_pain == "Yes" else 0]
 })
 
-# Prediction button
 if st.button(
     "Predict Lung Cancer Risk",
     use_container_width=True,
@@ -118,10 +116,7 @@ if st.button(
     prediction = rf_model.predict(input_data)
     probability = rf_model.predict_proba(input_data)[0][1]
 
-    st.markdown("<h2 style='text-align:center'>Prediction Result</h2>",
-                unsafe_allow_html=True)
-
-    if probability > 0.3:
-        st.error(f"🚨 **Lung Cancer Detected**\n\n**Probability:** {probability:.2%}")
+    if probability > 0.6:
+        st.error(f"**Lung Cancer Detected**\n")
     else:
-        st.success(f"✅ **No Lung Cancer Detected**\n\n**Probability:** {probability:.2%}")
+        st.success(f"**No Lung Cancer Detected**\n")
